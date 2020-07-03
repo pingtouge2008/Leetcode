@@ -5,40 +5,49 @@ import java.util.HashMap;
 public class Leetcode_146_LRU {
 
     private static class LRU<K, V> {
-        private HashMap<K, V> map;
-        private DualLinkedList cache;
+        private HashMap<K, Node<K, V>> map;
+        private DualLinkedList<K, V> cacheList;
         private int capacity;
 
         public LRU(int capacity) {
             this.map = new HashMap<>();
-            this.cache = new DualLinkedList();
+            this.cacheList = new DualLinkedList();
             this.capacity = capacity;
         }
 
         public V get(K key) {
             if (!map.containsKey(key))
                 return null;
-            V val = map.get(key);
-            // 利用 put 方法把该数据提前
-            put(key, val);
-            return val;
+            Node<K, V> found = map.get(key);
+            // 把该数据提到链表最前面前
+            // 1. 先把found从原链表删除
+            cacheList.remove(found);
+            // 2. 再把found提到链表头部
+            cacheList.addFirst(found);
+            return found.value;
         }
 
         public void put(K key, V value) {
-            Node<K, V> node = new Node<>(key, value);
+            Node<K, V> node = new Node<>(key, value); // 新添加的节点
             if (map.containsKey(key)) {
-                cache.remove(node); //先移除原来的节点
-                cache.addFirst(node);
-                map.put(key, value); //覆盖掉map里面原来的kv
-            } else {
-                if (capacity == cache.size) {// 容量满了
-                    cache.removeLast();
-                    map.remove(key);
-                }
-                // 不管容量满还是没满, 都要添加到头部
-                map.put(key, value);
-                cache.addFirst(node);
+                Node<K, V> existNode = map.get(key);
+
+                cacheList.remove(existNode); //先移除原来的节点
+                // cacheList.addFirst(node);
+                // map.put(key, node); //覆盖掉map里面原来的kv
+
+                //existNode.value = value;
+            } // else {
+            if (capacity == cacheList.size) {// 容量满了
+                Node<K,V> last = cacheList.removeLast();
+                map.remove(last.key);
             }
+            // 不管容量满还是没满, 都要添加到头部
+            // map.put(key, node);
+            // cacheList.addFirst(node);
+            // }
+            map.put(key, node);
+            cacheList.addFirst(node);
         }
     }
 
@@ -51,6 +60,7 @@ public class Leetcode_146_LRU {
             tail = new Node<>(null, null);
             head.next = tail;
             tail.prev = head;
+            size = 0;
         }
 
         public void addFirst(Node<K, V> node) {
@@ -70,9 +80,9 @@ public class Leetcode_146_LRU {
             return last;
         }
 
-        public void remove(Node<K, V> last) {
-            last.prev.next = tail;
-            tail.prev = last.prev;
+        public void remove(Node<K, V> node) { // node在链表中一定存在
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
             size--;
         }
     }
@@ -88,4 +98,5 @@ public class Leetcode_146_LRU {
             this.value = value;
         }
     }
+
 }
