@@ -21,9 +21,9 @@ import java.util.List;
 public class Leetcode_17_letter_combinations_of_a_phone_number {
 
 
-    private List<String> result = new ArrayList<>();
+    private final List<String> result = new ArrayList<>();
 
-    private String letterMap[] = {
+    private final String[] letterMap = {
             " ",    //0
             "",     //1
             "abc",  //2

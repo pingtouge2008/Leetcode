@@ -2,6 +2,7 @@ package com.ptg.test;
 
 public class Z03_Test {
 
+
     public static void main(String[] args) throws Exception {
         long start = System.currentTimeMillis();
         Thread t = new Thread(new RunnableImpl());

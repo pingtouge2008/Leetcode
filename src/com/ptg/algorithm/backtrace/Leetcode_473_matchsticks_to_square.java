@@ -85,7 +85,7 @@ class Leetcode_473_matchsticks_to_square {
 
     // =================================================
     private List<Integer> nums;
-    private int[] sums;
+    private final int[] sums;
     private int squareSide;
 
     public Leetcode_473_matchsticks_to_square() {
@@ -122,7 +122,6 @@ class Leetcode_473_matchsticks_to_square {
         }
 
         return false;
-
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

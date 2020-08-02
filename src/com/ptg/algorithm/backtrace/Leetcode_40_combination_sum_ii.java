@@ -40,7 +40,7 @@ public class Leetcode_40_combination_sum_ii {
 
 
     // https://leetcode-cn.com/problems/combination-sum-ii/solution/hui-su-suan-fa-jian-zhi-python-dai-ma-java-dai-m-3/
-    private List<List<Integer>> result = new ArrayList<>();
+    private final List<List<Integer>> result = new ArrayList<>();
 
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         if (candidates.length == 0) return result;

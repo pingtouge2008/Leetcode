@@ -5,9 +5,22 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+
+//给定一个可包含重复数字的序列，返回所有不重复的全排列。
+//
+// 示例:
+//
+// 输入: [1,1,2]
+//输出:
+//[
+//  [1,1,2],
+//  [1,2,1],
+//  [2,1,1]
+//]
+// Related Topics 回溯算法
 public class Leetcode_47_permutations_ii {
 
-    private List<List<Integer>> result = new ArrayList<>();
+    private final List<List<Integer>> result = new ArrayList<>();
 
     public List<List<Integer>> permuteUnique(int[] nums) {
         int len = nums.length;
